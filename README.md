@@ -1,3 +1,5 @@
+## 🌐 [English Version of README](README_EN.md)
+
 # Sistema de Backup
 
 O Sistema de Backup é uma solução projetada para realizar backups de arquivos importantes e permitir a restauração dos mesmos quando necessário. O sistema armazena os backups no Amazon S3 e possui uma interface simples para o upload de arquivos e a restauração dos mesmos.
