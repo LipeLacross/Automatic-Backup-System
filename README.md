@@ -1,16 +1,16 @@
-# Sistema de Backup Automático
+# Sistema de Backup 
 
-O Sistema de Backup Automático é uma solução projetada para realizar backups regulares de arquivos importantes. O sistema armazena os backups no Amazon S3 e permite a restauração fácil dos arquivos quando necessário. É ideal para garantir a segurança e integridade dos dados críticos.
+O Sistema de Backup  é uma solução projetada para realizar backups de arquivos importantes e permitir a restauração dos mesmos quando necessário. O sistema armazena os backups no Amazon S3 e possui uma interface simples para o upload de arquivos e a restauração dos mesmos.
 
 ## 🔨 Funcionalidades do Projeto
 
-- **Backup Automático:** Realiza backups automáticos de arquivos importantes em intervalos regulares.
+- **Backup Manual:** Permite o upload manual de arquivos para realizar o backup.
 - **Armazenamento na Nuvem:** Os arquivos de backup são armazenados no Amazon S3, garantindo a segurança e a disponibilidade.
-- **Restauração de Arquivos:** Permite restaurar facilmente os arquivos de backup para o sistema local.
+- **Restauração de Arquivos:** Permite restaurar arquivos do backup para o sistema local através da interface.
 
 ### Exemplo Visual do Projeto
 
-A interface do projeto é simples, com um formulário para upload de arquivos para backup e um botão para restaurar arquivos específicos. O backend é responsável por toda a lógica de backup e restauração, utilizando o Amazon S3.
+![image](https://github.com/user-attachments/assets/1f56e155-6a6a-4a41-92de-0e898ee835f4)
 
 ## ✔️ Técnicas e Tecnologias Utilizadas
 
@@ -22,14 +22,14 @@ A interface do projeto é simples, com um formulário para upload de arquivos pa
 
 ## 📁 Estrutura do Projeto
 
-- **app.js:** Arquivo principal que configura o servidor Express e gerencia as rotas.
+- **app.js:** Arquivo principal que configura o servidor Express, a integração com o AWS S3 e as rotas.
 - **bin/**
     - **www:** Script que inicia o servidor.
 - **config/**
     - `awsConfig.js`: Configuração da conexão com o serviço AWS S3.
-- **services/**
-    - `backupService.js`: Serviço responsável por fazer o upload de arquivos para o Amazon S3.
-    - `restoreService.js`: Serviço responsável por fazer o download de arquivos do Amazon S3.
+- **LICENSE:** Arquivo de licença do projeto.
+- **package.json:** Lista de dependências e scripts do projeto.
+- **package-lock.json:** Arquivo de bloqueio de dependências para garantir a consistência das versões instaladas.
 - **public/**
     - **images/**: Pasta para armazenar imagens.
     - **javascripts/**: Pasta para scripts JavaScript.
@@ -38,15 +38,13 @@ A interface do projeto é simples, com um formulário para upload de arquivos pa
 - **routes/**
     - `index.js`: Gerencia as rotas da aplicação, incluindo as rotas de backup e restauração.
     - `users.js`: Rotas relacionadas aos usuários (não utilizadas no sistema de backup).
+- **uploads/**: Pasta para armazenar arquivos carregados temporariamente.
 - **views/**
     - `error.pug`: Template para a página de erro.
     - `index.pug`: Template para a página inicial do sistema de backup.
     - `layout.pug`: Template base para as páginas do projeto.
-- **LICENSE:** Arquivo de licença do projeto.
-- **package.json:** Lista de dependências e scripts do projeto.
-- **package-lock.json:** Arquivo de bloqueio de dependências para garantir a consistência das versões instaladas.
 
-## 🛠️ Abrir e rodar o projeto
+## 🛠️ Abrir e Rodar o Projeto
 
 Para iniciar o projeto localmente, siga os passos abaixo:
 
@@ -74,6 +72,8 @@ Para iniciar o projeto localmente, siga os passos abaixo:
       ```
       AWS_ACCESS_KEY_ID=your_access_key_id
       AWS_SECRET_ACCESS_KEY=your_secret_access_key
+      AWS_REGION=us-east-1
+      AWS_BUCKET_NAME=your_bucket_name
       ```
 
 5. **Inicie o Servidor**:

@@ -1,31 +1,15 @@
-doctype html
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title Sistema de Backup Automático
-    link(rel="stylesheet" href="/stylesheets/style.css")
-  body
-    h1 Sistema de Backup Automático
+extends layout
 
-    p O Sistema de Backup Automático realiza backups regulares de arquivos importantes e os armazena no Amazon S3, garantindo a segurança e integridade dos dados.
+block content
+  h1 Bem-vindo ao Sistema de Backup
+  p Faça upload de um arquivo para realizar o backup.
 
-    .button-wrapper
-      a.button(href="/backup") Realizar Backup
-      a.button(href="/restore") Restaurar Arquivo
+  form(action="/backup" method="post" enctype="multipart/form-data")
+    input(type="file" name="file")
+    button(type="submit") Realizar Backup
 
-    .cards
-      .card
-        h2 Backup Recente
-        p Backup realizado com sucesso em 01/09/2024
-      .card
-        h2 Restauração Disponível
-        p Arquivos restaurados com sucesso em 01/09/2024
-      .card
-        h2 Configurações
-        p Configure o sistema de backup para melhor desempenho
+  h2 Restaurar Arquivo
 
-    form(method="POST" action="/submit")
-      input.form-control(type="text" placeholder="Digite seu nome")
-      input.form-control(type="email" placeholder="Digite seu email")
-      input.submit-btn(type="submit" value="Enviar")
+  form(action="/restore" method="get")
+    input(type="text" name="filename" placeholder="Nome do arquivo para restaurar")
+    button(type="submit") Restaurar

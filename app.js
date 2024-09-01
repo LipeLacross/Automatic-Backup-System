@@ -1,41 +1,70 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const AWS = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const fs = require('fs');
+const app = express();
+const indexRouter = require('./routes/index');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
-var app = express();
-
-// view engine setup
+// Configura o diretório de visualizações
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// Configura o diretório de arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Configura o body-parser para processar formulários
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Configura o AWS S3
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION
+});
+
+// Configura o multer para uploads usando o S3
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString() + path.extname(file.originalname));
+    }
+  })
+});
+
+// Usa as rotas definidas em routes/index.js
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// Rota para realizar backup (upload para S3)
+app.post('/backup', upload.single('file'), (req, res) => {
+  res.send('Backup realizado com sucesso!');
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+// Rota para restaurar arquivo
+app.get('/restore/:filename', (req, res) => {
+  const params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: req.params.filename
+  };
+  s3.getObject(params, (err, data) => {
+    if (err) {
+      res.status(500).send('Erro ao recuperar o arquivo.');
+    } else {
+      res.send(data.Body);
+    }
+  });
 });
 
-module.exports = app;
+// Define a porta do servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});

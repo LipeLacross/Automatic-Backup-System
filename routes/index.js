@@ -1,31 +1,19 @@
 const express = require('express');
-const path = require('path');
-const { uploadFile } = require('../services/backupService');
-const { downloadFile } = require('../services/restoreService');
 const router = express.Router();
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' }); // Pasta para arquivos temporários
 
-// Página inicial
+// Rota para a página principal
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Sistema de Backup Automático' });
+  res.render('index');
 });
 
-// Rota para fazer upload de backup
-router.post('/backup', upload.single('file'), (req, res) => {
-  const filePath = req.file.path;
-  uploadFile(filePath)
-      .then(() => res.send('Backup realizado com sucesso!'))
-      .catch(err => res.status(500).send('Erro ao realizar backup: ' + err.message));
+// Rota para realizar backup
+router.post('/backup', (req, res) => {
+  res.send('Backup iniciado!');
 });
 
-// Rota para restaurar backup
-router.get('/restore/:fileName', (req, res) => {
-  const fileName = req.params.fileName;
-  const downloadPath = path.join('restored', fileName); // Pasta para arquivos restaurados
-  downloadFile(fileName, downloadPath)
-      .then(() => res.send('Backup restaurado com sucesso!'))
-      .catch(err => res.status(500).send('Erro ao restaurar backup: ' + err.message));
+// Rota para restaurar arquivo
+router.get('/restore/:filename', (req, res) => {
+  // Aqui você pode adicionar o código para restaurar o arquivo do S3
 });
 
 module.exports = router;
