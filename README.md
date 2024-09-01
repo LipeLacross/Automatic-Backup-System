@@ -1,6 +1,6 @@
-# Sistema de Backup 
+# Sistema de Backup
 
-O Sistema de Backup  é uma solução projetada para realizar backups de arquivos importantes e permitir a restauração dos mesmos quando necessário. O sistema armazena os backups no Amazon S3 e possui uma interface simples para o upload de arquivos e a restauração dos mesmos.
+O Sistema de Backup é uma solução projetada para realizar backups de arquivos importantes e permitir a restauração dos mesmos quando necessário. O sistema armazena os backups no Amazon S3 e possui uma interface simples para o upload de arquivos e a restauração dos mesmos.
 
 ## 🔨 Funcionalidades do Projeto
 
@@ -85,13 +85,8 @@ Para iniciar o projeto localmente, siga os passos abaixo:
 
 ## 🌐 Deploy
 
-Para realizar o deploy do projeto, você pode utilizar serviços como Heroku, AWS Elastic Beanstalk, ou qualquer outro serviço de hospedagem que suporte Node.js.
+O projeto está disponível online. Acesse o site para verificar o funcionamento:
 
-1. **Prepare as Configurações de Produção**:
-    - Certifique-se de configurar corretamente as variáveis de ambiente para produção.
+- [https://backupsempre.netlify.app/](https://backupsempre.netlify.app/)
 
-2. **Deploy no Serviço Escolhido**:
-    - Siga as instruções específicas do serviço de hospedagem para fazer o deploy do projeto.
-
-3. **Verifique o Funcionamento**:
-    - Após o deploy, acesse a URL do projeto para garantir que tudo está funcionando corretamente.
+Para realizar o deploy em outros serviços, como Heroku ou AWS Elastic Beanstalk, siga as instruções específicas do serviço escolhido e certifique-se de configurar corretamente as variáveis de ambiente para produção.
